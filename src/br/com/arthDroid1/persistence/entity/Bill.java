@@ -111,4 +111,19 @@ public class Bill {
         this.dueDate = dueDate;
     } 
 
+    public void setStatus(BillStatus status){
+        this.status = status;
+    }
+    public void setBillType(BillType billType){
+        this.billType = billType;
+    }
+
+    public void setPayDay(LocalDate payDay) {
+        this.payDay = payDay;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
 }

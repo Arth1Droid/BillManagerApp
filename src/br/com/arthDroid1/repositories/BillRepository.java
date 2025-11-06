@@ -1,17 +1,16 @@
-package br.com.arthDroid1.repositories;
+package com.arthDroid1.repositories;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import br.com.arthDroid1.persistence.entity.Bill;
+import com.arthDroid1.persistence.entity.Bill;
 
 public class BillRepository {
 
-    private Map<UUID, Bill> bills = new HashMap<UUID, Bill>();
+    private Map<UUID,Bill> bills = new HashMap<UUID, Bill>();
 
     public void save(Bill bill){
         if (bill == null || bill.getId() == null) {
