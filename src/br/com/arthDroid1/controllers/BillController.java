@@ -182,7 +182,7 @@ public class BillController {
         boolean success = billService.payBill(id, payDate);
 
         if (success) {
-            System.out.println("\n✅ Sucessful! Bill ID: " + id + " payed: " + payDate + ".");
+            System.out.println("\n Sucessful! Bill ID: " + id + " payed: " + payDate + ".");
         } else {
             System.out.println("\nFailed to pay the bill. Please check if the ID exists or if the bill has already been paid.");
         }
