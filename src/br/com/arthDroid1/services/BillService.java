@@ -86,24 +86,30 @@ public class BillService {
         .sum();
   }
 
-  public boolean updatedBill(UUID id, Bill updatedBill){
-      Bill existingBill = repository.findById(id);
-      LocalDate today = LocalDate.now();
-      if (existingBill == null) {
-        throw new IllegalArgumentException("This bill not exist");
-      }
-      if (existingBill.getStatus() == BillStatus.PAID) {
-        throw new IllegalArgumentException("You can't update a paid bill");
-      }
-      if (existingBill.getDueDate().isBefore(today)) {
-        throw new IllegalArgumentException("The bill due date cannot be before today");
-      }
-      existingBill.setCost(updatedBill.getCost());
-      existingBill.setDueDate(updatedBill.getDueDate());
-      existingBill.setDescription(updatedBill.getDescription());
-      repository.update(updatedBill);
-      return true;
-  }
+public boolean updatedBill(UUID id, Bill updatedBill){
+    Bill existingBill = repository.findById(id);
+    LocalDate today = LocalDate.now();
+
+    if (existingBill == null) {
+        throw new IllegalArgumentException("This bill not exist.");
+    }
+
+    if (existingBill.getStatus() == BillStatus.PAID) {
+        throw new IllegalArgumentException("You cannot update an account that has already been paid for");
+    }
+
+    if (updatedBill.getDueDate().isBefore(today)) {
+        throw new IllegalArgumentException("The new due date cannot be earlier than today.");
+    }
+  
+    existingBill.setCost(updatedBill.getCost());
+    existingBill.setDueDate(updatedBill.getDueDate());
+    existingBill.setDescription(updatedBill.getDescription());
+
+    repository.update(existingBill); 
+    
+    return true;
+}
 
   public boolean deleteBill(UUID id){
     Bill existingBill = repository.findById(id);
@@ -128,6 +134,12 @@ public class BillService {
         });
   
 }
+
+  public Bill findById(UUID id) {
+    Bill foundId = repository.findById(id);
+    return foundId;
+
+  }
 
 
 

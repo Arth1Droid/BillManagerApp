@@ -15,4 +15,16 @@ public enum BillStatus {
         return description;
     }
 
+        public static BillStatus fromDescription(String description) {
+        if (description == null) {
+            return null; 
+        }
+        for (BillStatus type : BillStatus.values()) {
+            if (type.description.equalsIgnoreCase(description.trim())) {
+                return type; 
+            }
+        }
+        return null; 
+    }
+
 }

@@ -16,4 +16,17 @@ public enum BillType {
     public String getDescription(){
         return description;
     }
+
+    public static BillType fromDescription(String description) {
+        if (description == null) {
+            return null; 
+        }
+        for (BillType type : BillType.values()) {
+            if (type.description.equalsIgnoreCase(description.trim())) {
+                return type; 
+            }
+        }
+        return null; 
+    }
 }
+
