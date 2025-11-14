@@ -1,0 +1,34 @@
+# Compiled class files
+target/
+bin/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*~
+
+# Spring Boot
+.spring-boot-devtools.properties
+
+# Linux cache
+.cache/
+
+# Environment files
+.env
