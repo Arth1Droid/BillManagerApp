@@ -2,17 +2,43 @@ package br.com.arthdroid1.models;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "bill")
 public class Bill {
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name ="description")
     private String description;
+    @Column(name ="pay_date")
     private LocalDate payDay;
+    @Column(name ="due_date")
     private LocalDate dueDate;
+  
+    @Enumerated(EnumType.STRING)
+    @Column(name ="bill_status")
     private BillStatus status;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name ="bill_type")
     private BillType billType;
+    
+    @Column(name ="cost")
     private double cost;
-
+    
+    public Bill() {
+    	
+    }
     public Bill(BillType billType,double cost, String description, LocalDate dueDate){
        
         if (description.isBlank()) {
@@ -27,7 +53,7 @@ public class Bill {
         }
 
         this.cost = cost;
-        this.id = UUID.randomUUID();
+
         this.dueDate = dueDate;
         this.billType = billType;
         this.description = description;
@@ -72,7 +98,7 @@ public class Bill {
         return cost;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -123,6 +149,9 @@ public class Bill {
     }
 
     public void setCost(double cost) {
+    	if (cost <= 0) {
+            throw new IllegalArgumentException("The cost cannot be zero or negative");
+        }
         this.cost = cost;
     }
 
