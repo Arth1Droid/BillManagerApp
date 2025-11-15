@@ -34,7 +34,7 @@ public class Bill {
     private BillType billType;
     
     @Column(name ="cost")
-    private double cost;
+    private Double cost;
     
     public Bill() {
     	
@@ -94,7 +94,7 @@ public class Bill {
         return status == BillStatus.OVERDUE;
     }
 
-    public double getCost(){
+    public Double getCost(){
         return cost;
     }
 
@@ -148,7 +148,7 @@ public class Bill {
         this.payDay = payDay;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
     	if (cost <= 0) {
             throw new IllegalArgumentException("The cost cannot be zero or negative");
         }
