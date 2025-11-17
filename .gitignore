@@ -1,34 +1,82 @@
-# Compiled class files
+HELP.md
 target/
-bin/
-
-# Maven
 .mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# Logs
-*.log
-
-# Eclipse files
+### STS ###
+.apt_generated
 .classpath
+.factorypath
 .project
-.settings/
+.settings
+.springBeans
+.sts4-cache
 
-# IntelliJ
-.idea/
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
+*.ipr
 
-# OS files
-.DS_Store
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Logs ###
+*.log
+logs/
+spring.log
+
+### Sistema operacional ###
+# Windows
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Backup files
+# macOS
+.DS_Store
+
+# Linux
 *~
 
-# Spring Boot
-.spring-boot-devtools.properties
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
 
-# Linux cache
-.cache/
+### Maven ###
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
 
-# Environment files
-.env
+### Credenciais / Segurança ###
+# Evita subir dados sensíveis
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/resources/application-local.properties
+src/main/resources/application-dev.properties
+src/main/resources/application-prod.properties
+
+### Banco de dados ###
+*.db
+*.sqlite
+*.mv.db
+*.h2.db
+*.dump
+
+# Ignora todos os .sql
+*.sql
+
+# Exceto migrations do Flyway
+!src/main/resources/db/migration/*.sql
