@@ -42,7 +42,7 @@ public class Bill {
     public Bill(BillType billType,double cost, String description, LocalDate dueDate){
        
         if (description.isBlank()) {
-            throw new IllegalArgumentException("The description cannt be blank");
+            throw new IllegalArgumentException("The description cannot be blank");
         }
         if (cost < 0) {
             throw new IllegalArgumentException("The cost cannot be 0 or negative");       

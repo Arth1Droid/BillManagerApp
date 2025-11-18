@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.com.arthdroid1.exceptions.BillCostMinimumRequiredException;
+import br.com.arthdroid1.exceptions.ExistingBillException;
+import br.com.arthdroid1.exceptions.NotFindBillException;
+import br.com.arthdroid1.exceptions.NullBillException;
+import br.com.arthdroid1.exceptions.NullPayDateException;
 import br.com.arthdroid1.models.Bill;
 import br.com.arthdroid1.models.BillStatus;
 import br.com.arthdroid1.repositories.BillRepository;
@@ -21,16 +26,16 @@ public class BillService {
   public void registerBill(Bill newBill){
     
     if ( newBill == null) {
-      throw new IllegalArgumentException("The bill  cannot be null ");
+      throw new NullBillException();
     }
     if (newBill.getCost() <= 0 )   {
-      throw new IllegalArgumentException("The bill cost must be be greater than 0 ");
+      throw new BillCostMinimumRequiredException();
 
     }
     
     Long existBill = newBill.getId();
     if (repository.findById(existBill) != null) {
-        throw new IllegalArgumentException("The bill already exist");
+        throw new ExistingBillException();
     }
 
     repository.saveAndFlush(newBill);
@@ -40,7 +45,7 @@ public class BillService {
   public boolean payBill(Long id, LocalDate payDay ){
     Bill billTopay = findById(id);
     if (payDay == null) {
-      throw new IllegalArgumentException("The pay date cannot be null");
+      throw new NullPayDateException();
     }
 
     if (billTopay.getStatus() == BillStatus.PAID) {
@@ -118,7 +123,7 @@ public boolean updatingBill(Long id, Bill updatedBill){
 
   public Bill findById(Long id) {
 	    return repository.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Bill not found with id: " + id));
+	            .orElseThrow(() -> new NotFindBillException());
   }
 
 
