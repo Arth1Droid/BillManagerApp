@@ -17,6 +17,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank(message = "Password cannot be empty")
+	@Column(nullable = false)
+	private String password;
 	@Column(name = "name", nullable = false)
 	@NotBlank
 	private String name;
@@ -25,6 +28,18 @@ public class User {
 	private String email;
 	@OneToMany(mappedBy = "user")
     private List<Bill> bills;
+	
+	public User() {
+		
+	}
+	
+	public User(String name, String email, String password) {
+		this.name = name;
+		this.email = email;
+		this.password =password;
+	}
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -48,6 +63,14 @@ public class User {
 	}
 	public void setBills(List<Bill> bills) {
 		this.bills = bills;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
