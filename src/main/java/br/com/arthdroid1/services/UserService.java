@@ -17,7 +17,10 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 	
-	public User createUSer(User newUser) {		
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	public User createUser(User newUser) {		
 	    if(newUser.getName() == null) {
 			throw new IllegalArgumentException("The name cannot be null");	
 		}
@@ -31,6 +34,7 @@ public class UserService {
 	    if(existingUserEmail.isPresent()) {
 			throw new IllegalArgumentException("This email is already in use");
 		}
+	    newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 		  User userResponse = repository.save(newUser);
 		  
 		  return userResponse;
@@ -79,13 +83,8 @@ public class UserService {
 		User user = findById(id);	
 		return user.getBills();
 	}
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
-	public User createUser(User newUser) {
-	    newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-	    return repository.save(newUser);
-	}
+
+
 }
 
