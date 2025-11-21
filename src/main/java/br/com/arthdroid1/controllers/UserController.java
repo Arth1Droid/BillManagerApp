@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.arthdroid1.dtos.UserRequestDTO;
+import br.com.arthdroid1.dtos.UserResponseDTO;
+import br.com.arthdroid1.mapper.UserMapper;
 import br.com.arthdroid1.models.Bill;
 import br.com.arthdroid1.models.User;
 import br.com.arthdroid1.services.UserService;
@@ -28,9 +31,10 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> registerUser(@RequestBody User user) {
-		User userSaved = userService.createUSer(user);
-		return ResponseEntity.ok(userSaved);
+	public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO request) {
+		User newUser = UserMapper.toEntity(request);
+		User createdUser = userService.createUser(newUser);
+		return ResponseEntity.ok(UserMapper.toResponse(createdUser));
 	}
 	
 	@GetMapping("/id/{id}")
