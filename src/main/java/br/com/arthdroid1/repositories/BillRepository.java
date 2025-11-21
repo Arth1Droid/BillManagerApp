@@ -15,4 +15,6 @@ public interface BillRepository extends JpaRepository<Bill, Long>{
 	
 	List<Bill> findByStatus(BillStatus status);
 	
+    List<Bill> findByUserId(Long userId);
+	
 }

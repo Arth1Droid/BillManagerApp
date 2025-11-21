@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_us")
@@ -17,8 +18,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "name", nullable = false)
+	@NotBlank
 	private String name;
-	@Column(name = "email", nullable = false)
+	@NotBlank
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	@OneToMany(mappedBy = "user")
     private List<Bill> bills;
