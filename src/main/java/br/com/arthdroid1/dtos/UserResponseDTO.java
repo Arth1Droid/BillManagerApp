@@ -1,11 +1,11 @@
 package br.com.arthdroid1.dtos;
 
-public class UserDTO {
+public class UserResponseDTO {
 	private Long id;
 	private String name;
 	private String email;
 	
-	public UserDTO(Long id, String name, String email) {
+	public UserResponseDTO(Long id, String name, String email) {
 		this.id = id;
 		this.email = email;
 		this.name = name;
