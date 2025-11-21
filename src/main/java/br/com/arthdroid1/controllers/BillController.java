@@ -21,7 +21,7 @@ import br.com.arthdroid1.services.BillService;
 
 
 @RestController
-@RequestMapping("/bills") // plural é mais comum
+@RequestMapping("/bills") 
 public class BillController {
 
     private final BillService billService;
@@ -64,6 +64,8 @@ public class BillController {
     public ResponseEntity<List<Bill>> listAllBills() {
         return ResponseEntity.ok(billService.listAll());
     }
+    
+    
 
     @GetMapping("/status")
     public ResponseEntity<List<Bill>> listBillsByStatus(@RequestParam BillStatus status) {
