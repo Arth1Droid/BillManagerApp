@@ -1,16 +1,17 @@
 package br.com.arthdroid1.mapper;
 
-import br.com.arthdroid1.dtos.UserDTO;
+import br.com.arthdroid1.dtos.UserRequestDTO;
+import br.com.arthdroid1.dtos.UserResponseDTO;
 import br.com.arthdroid1.models.User;
 
 public class UserMapper {
 	
-	 public static UserDTO toDTO(User user) {
-	        return new UserDTO(user.getId(), user.getName(), user.getEmail());
-	    }
+    public static User toEntity(UserRequestDTO request) {
+        return new User(request.getName(), request.getEmail(), request.getPassword());
+    }
 
-	    public static User toEntity(UserDTO dto, String password) {
-	        return new User(dto.getName(), dto.getEmail(), password);
-	    }
+    public static UserResponseDTO toResponse(User user) {
+        return new UserResponseDTO(user.getId(), user.getName(), user.getEmail());
+    }
 
 }
