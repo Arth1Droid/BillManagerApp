@@ -1,5 +1,6 @@
 package br.com.arthdroid1.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 	public class UserRequestDTO {
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 		@NotBlank
 	    private String name;
 		@NotBlank
+		@Email
 		private String email;
 	    @NotBlank
 		private String password;

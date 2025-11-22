@@ -29,58 +29,36 @@ public class BillResponseDTO {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(LocalDate dueDate) {
-		this.dueDate = dueDate;
-	}
 
 	public LocalDate getPayDay() {
 		return payDay;
 	}
 
-	public void setPayDay(LocalDate payDay) {
-		this.payDay = payDay;
-	}
 
 	public Double getCost() {
 		return cost;
 	}
 
-	public void setCost(Double cost) {
-		this.cost = cost;
-	}
 
 	public BillStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(BillStatus status) {
-		this.status = status;
-	}
 
 	public BillType getBillType() {
 		return billType;
 	}
 
-	public void setBillType(BillType billType) {
-		this.billType = billType;
-	}
-    
+
     
     
 }
