@@ -1,5 +1,6 @@
 package br.com.arthdroid1.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -38,26 +39,35 @@ public class UserController {
 	}
 	
 	@GetMapping("/id/{id}")
-	public ResponseEntity<User> listUserById(@PathVariable Long id){
-		User user = userService.findById(id);
-        return ResponseEntity.ok(user);	
+	public ResponseEntity<UserResponseDTO> listUserById(@PathVariable Long id){
+		User findUser = userService.findById(id);
+		UserResponseDTO dto = UserMapper.toResponse(findUser);
+        return ResponseEntity.ok(dto);	
 	}
 	@GetMapping("/email/{email}")
-	public ResponseEntity<User> listUserByEmail(@PathVariable String email){
-		User user = userService.findByEmail(email);
-        return ResponseEntity.ok(user);	
+	public ResponseEntity<UserResponseDTO> listUserByEmail(@PathVariable String email){
+		User findUser = userService.findByEmail(email);
+		UserResponseDTO dto = UserMapper.toResponse(findUser);
+        return ResponseEntity.ok(dto);	
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<User>> listAllUsers(){
-		return ResponseEntity.ok(userService.findAllUsers());
+	public ResponseEntity<List<UserResponseDTO>> listAllUsers(){
+		List<User> users = new ArrayList<>();
+		List<UserResponseDTO> dtos = new ArrayList<>();
+
+		for (User user : users) {
+			
+			dtos.add(UserMapper.toResponse(user));
+		}
+		return ResponseEntity.ok(dtos);
 	}
 	
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
-		 User updatedUser = userService.updateUser(id, user);
-		return ResponseEntity.ok(updatedUser);
+	public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO user){
+		   User updated = userService.updateUser(id, UserMapper.toEntity(user));
+		return ResponseEntity.ok(UserMapper.toResponse(updated));
 		
 	}
 	@DeleteMapping("/{id}")
