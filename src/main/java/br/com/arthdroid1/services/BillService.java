@@ -23,7 +23,7 @@ public class BillService {
   }
 
 
-  public void registerBill(Bill newBill){
+  public Bill registerBill(Bill newBill){
     
     if ( newBill == null) {
       throw new NullBillException();
@@ -38,7 +38,8 @@ public class BillService {
         throw new ExistingBillException();
     }
 
-    repository.saveAndFlush(newBill);
+    Bill saved = repository.saveAndFlush(newBill);
+    return saved;
 
   }
 

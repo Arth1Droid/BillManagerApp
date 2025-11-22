@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.arthdroid1.dtos.BillRequestDTO;
+import br.com.arthdroid1.dtos.BillResponseDTO;
+import br.com.arthdroid1.mapper.BillMapper;
 import br.com.arthdroid1.models.Bill;
 import br.com.arthdroid1.models.BillStatus;
 import br.com.arthdroid1.services.BillService;
 
-
 @RestController
-@RequestMapping("/bills") 
+@RequestMapping("/bills")
 public class BillController {
 
     private final BillService billService;
@@ -30,58 +32,82 @@ public class BillController {
         this.billService = billService;
     }
 
+    // CREATE
     @PostMapping
-    public ResponseEntity<Bill> createBill(@RequestBody Bill bill) {
-        billService.registerBill(bill);
-        return ResponseEntity.ok(bill);
+    public ResponseEntity<BillResponseDTO> createBill(@RequestBody BillRequestDTO request) {
+        Bill bill = BillMapper.toEntity(request, null); 
+        Bill saved = billService.registerBill(bill);
+        return ResponseEntity.ok(BillMapper.toResponse(saved));
     }
 
+    // READ - by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Bill> getBillById(@PathVariable Long id) {
+    public ResponseEntity<BillResponseDTO> getBillById(@PathVariable Long id) {
         Bill bill = billService.findById(id);
-        return ResponseEntity.ok(bill);
+        return ResponseEntity.ok(BillMapper.toResponse(bill));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Bill> updateBill(@PathVariable Long id, @RequestBody Bill bill) {
+    public ResponseEntity<BillResponseDTO> updateBill(
+            @PathVariable Long id,
+            @RequestBody Bill bill) {
+
         billService.updatingBill(id, bill);
-        return ResponseEntity.ok(billService.findById(id));
+        Bill updated = billService.findById(id);
+        return ResponseEntity.ok(BillMapper.toResponse(updated));
     }
 
+    // PAY
     @PatchMapping("/{id}/pay")
-    public ResponseEntity<Bill> payBill(@PathVariable Long id, @RequestParam LocalDate payDate) {
+    public ResponseEntity<BillResponseDTO> payBill(
+            @PathVariable Long id,
+            @RequestParam LocalDate payDate) {
+
         billService.payBill(id, payDate);
-        return ResponseEntity.ok(billService.findById(id));
+        Bill paid = billService.findById(id);
+        return ResponseEntity.ok(BillMapper.toResponse(paid));
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBill(@PathVariable Long id) {
         billService.deleteBill(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
+    // LIST ALL
     @GetMapping
-    public ResponseEntity<List<Bill>> listAllBills() {
-        return ResponseEntity.ok(billService.listAll());
-    }
-    
-    
+    public ResponseEntity<List<BillResponseDTO>> listAllBills() {
+        List<Bill> bills = billService.listAll();
 
+        List<BillResponseDTO> dtos = bills.stream()
+                .map(BillMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
+    }
+
+    // LIST BY STATUS
     @GetMapping("/status")
-    public ResponseEntity<List<Bill>> listBillsByStatus(@RequestParam BillStatus status) {
-        List<Bill> bills;
-        switch (status) {
-            case OPEN -> bills = billService.listOpenBills();
-            case OVERDUE -> bills = billService.listOverdueBills();
-            case PAID -> bills = billService.listPaidBills();
-            default -> bills = List.of();
-        }
-        return ResponseEntity.ok(bills);
+    public ResponseEntity<List<BillResponseDTO>> listBillsByStatus(
+            @RequestParam BillStatus status) {
+
+        List<Bill> bills = switch (status) {
+            case OPEN -> billService.listOpenBills();
+            case OVERDUE -> billService.listOverdueBills();
+            case PAID -> billService.listPaidBills();
+        };
+
+        List<BillResponseDTO> dtos = bills.stream()
+                .map(BillMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
     }
 
+    // TOTAL OPEN
     @GetMapping("/total-open")
     public ResponseEntity<Double> showTotalOpenAmount() {
         return ResponseEntity.ok(billService.getTotalOpenAmount());
     }
 }
-
