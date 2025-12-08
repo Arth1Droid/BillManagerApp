@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.arthdroid1.models.Bill;
@@ -16,9 +15,6 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository repository;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 	
 	public User createUser(User newUser) {		
 	    if(newUser.getName() == null) {
@@ -34,7 +30,6 @@ public class UserService {
 	    if(existingUserEmail.isPresent()) {
 			throw new IllegalArgumentException("This email is already in use");
 		}
-	    newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 		  User userResponse = repository.save(newUser);
 		  
 		  return userResponse;

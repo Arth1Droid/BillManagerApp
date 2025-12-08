@@ -52,17 +52,16 @@ public class UserController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<UserResponseDTO>> listAllUsers(){
-		List<User> users = new ArrayList<>();
-		List<UserResponseDTO> dtos = new ArrayList<>();
+	public ResponseEntity<List<UserResponseDTO>> listAllUsers() {
+	    List<User> users = userService.findAllUsers();
+	    List<UserResponseDTO> dtos = new ArrayList<>();
 
-		for (User user : users) {
-			
-			dtos.add(UserMapper.toResponse(user));
-		}
-		return ResponseEntity.ok(dtos);
+	    for (User user : users) {
+	        dtos.add(UserMapper.toResponse(user));
+	    }
+	    return ResponseEntity.ok(dtos);
 	}
-	
+
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO user){
